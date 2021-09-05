@@ -1,0 +1,261 @@
+﻿
+
+@{
+    Layout = null;
+}
+@using PhotoApp.Models;
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                .topnav a.active {
+                    background-color: #4CAF50;
+                    color: white;
+                }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial;
+        }
+
+        /* Style tab links */
+        .tablink {
+            background-color: #555;
+            color: white;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            font-size: 17px;
+            width: 25%;
+        }
+
+            .tablink:hover {
+                background-color: #555;
+            }
+
+        /* Style the tab content (and add height:100% for full page content) */
+        .tabcontent {
+            color: white;
+            display: none;
+            padding: 100px 20px;
+            height: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #00BFFF
+        }
+
+        .tabcontent {
+            color: black;
+            display: none;
+            padding: 100px 20px;
+            height: 100%;
+        }
+
+        #Employees {
+            background-color: #00BFFF;
+        }
+
+        #AddEmployees {
+            background-color: #00BFFF;
+        }
+
+        #EditEmployees {
+            background-color: #00BFFF;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Добро пожаловать!</h3>
+    <div class="topnav">
+        <a class="active" href="https://localhost:44318/Home/Index">Домой</a>
+        <a href="https://localhost:44318/Home/AddSubject">Занятия</a>
+        <a href="https://localhost:44318/Home/AddGroup">Группы</a>
+        <a href="https://localhost:44318/Home/AddContract">Договоры</a>
+        <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
+        <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+    </div>
+    <button class="tablink" onclick="openPage('Employees', this, '#00BFFF')">Список сотрудников</button>
+    <button class="tablink" onclick="openPage('AddEmployees', this, '#00BFFF')" id="defaultOpen">Добавление сотрудников</button>
+    <button class="tablink" onclick="openPage('ChangeEmployees', this, '#00BFFF')" id="defaultOpen">Изменение сотрудников</button>
+
+    <div id="ChangeEmployees" class="tabcontent">
+        <div>
+            <form class="users" action="/Home/EditCoachPost" method="post">
+                <div class="container">                    
+                    <p>
+                        <label for="country">Выберите сотрудника для изменения данных</label>
+                        <select id="Id" name="Id">
+                            @foreach (var b in ViewBag.CoachModel)
+                            {
+                                <option value="@b.Id" name="Id">@b.Fname @b.Sname @b.Tname</option>
+
+                            }
+
+                        </select>
+                    </p>
+
+                    <label for="lname">Фамилия</label>
+                    <input type="text" id="FName" name="FName">
+                    <label for="lname">Имя</label>
+                    <input type="text" id="SName" name="SName">
+                    <label for="lname">Отчество</label>
+                    <input type="text" id="TName" name="TName">
+                    <label for="lname">Телефон</label>
+                    <input type="text" id="Phone" name="Phone">
+                    <label for="lname">Email</label>
+                    <input type="text" id="Email" name="Email">
+
+                    <input type="submit" value="Добавить">
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="AddEmployees" class="tabcontent">
+        <div>
+            <form class="users" action="/Home/AddCoachPost" method="post">
+                <div class="container">
+
+                    <label for="lname">Фамилия</label>
+                    <input type="text" id="FName" name="FName" required>
+                    <label for="lname">Имя</label>
+                    <input type="text" id="SName" name="SName" required>
+                    <label for="lname">Отчество</label>
+                    <input type="text" id="TName" name="TName">
+                    <label for="lname">Телефон</label>
+                    <input type="text" id="Phone" name="Phone" required>
+                    <label for="lname">Email</label>
+                    <input type="text" id="Email" name="Email">
+
+                    <input type="submit" value="Добавить">
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="Employees" class="tabcontent">
+        <div style="overflow-x:auto;">
+            <table>
+
+
+                <tr>
+                    <th> Фамилия</th>
+                    <th> Имя</th>
+                    <th> Отчество</th>
+                    <th> Телефон</th>
+                    <th> Email</th>
+
+                </tr>
+
+                @foreach (var b in ViewBag.CoachModel)
+                {
+                    <tr>
+                        <td><p>@b.Fname</p></td>
+                        <td><p>@b.Sname</p></td>
+                        <td><p>@b.Tname</p></td>
+                        <td><p>@b.Phone</p></td>
+                        <td><p>@b.Email</p></td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function openPage(pageName, elmnt, color) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            elmnt.style.backgroundColor = color;
+
+        }
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+</body>
+</html>
