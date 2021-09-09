@@ -100,7 +100,10 @@ namespace PhotoApp.Controllers
             var worker = new CoachModel();
             worker.Fname = coach.Fname.ToString();
             worker.Sname = coach.Sname.ToString();
-            worker.Tname = coach.Tname.ToString();
+            if (coach.Tname != null)
+                worker.Tname = coach.Tname.ToString();
+            else
+                worker.Tname = null;
             worker.Phone = coach.Phone.ToString();
             worker.Email = coach.Email.ToString();
             db.CoachModel.Add(worker);
@@ -113,7 +116,10 @@ namespace PhotoApp.Controllers
             var worker = new StudentModel();
             worker.Fname = coach.Fname.ToString();
             worker.Sname = coach.Sname.ToString();
-            worker.Tname = coach.Tname.ToString();
+            if (coach.Tname != null) 
+                worker.Tname = coach.Tname.ToString();
+            else
+                worker.Tname = null;
             worker.Phone = coach.Phone.ToString();
             worker.Email = coach.Email.ToString();
             db.StudentModel.Add(worker);
@@ -174,6 +180,7 @@ namespace PhotoApp.Controllers
                 if (b.Id == coach.SeasonId)
                 {
                     conrep.Cost = b.Cost;
+                    conrep.Name = b.Name;
                     conrep.SubjectCount = b.SubjectCount;
                     break;
                 }
@@ -229,6 +236,90 @@ namespace PhotoApp.Controllers
         }
 
         [HttpPost]
+        public ActionResult EditSubject(SubjectModel coach)
+        {
+            var worker = new SubjectModel();
+            foreach (var a in db.SubjectModel)
+            {
+                if (a.Id == coach.Id)
+                {
+                    worker.Id = a.Id;
+                    if (coach.GroupId != 0)
+                    {
+                        worker.GroupId = coach.GroupId;
+                    }
+                    else
+                        worker.GroupId = a.GroupId;
+                    if (coach.Place != null)
+                    {
+                        worker.Place = coach.Place;
+                    }
+                    else
+                        worker.Place = a.Place;
+                    if (coach.Status != null)
+                    {
+                        worker.Status = coach.Status;
+                    }
+                    else
+                        worker.Status = a.Status;
+                    if (coach.SubjectTime != null)
+                    {
+                        worker.SubjectTime = coach.SubjectTime;
+                    }
+                    else
+                        worker.SubjectTime = a.SubjectTime;
+                    if (coach.SubjectType != null)
+                    {
+                        worker.SubjectType = coach.SubjectType;
+                    }
+                    else
+                        worker.SubjectType = a.SubjectType;
+                    if (coach.Topic != null)
+                    {
+                        worker.Topic = coach.Topic;
+                    }
+                    else
+                        worker.Topic = a.Topic;
+                    db.SubjectModel.Remove(a);
+                    break;
+                }
+            }
+            db.SubjectModel.Add(worker);
+            db.SaveChanges();
+            
+
+            var srep = new SubjectRepModel();
+            srep.SubjectTime = worker.SubjectTime;
+            srep.Place = worker.Place;
+            srep.SubjectType = worker.SubjectType;
+            srep.Status = worker.Status;
+            srep.Topic = worker.Topic;
+            foreach (var a in db.GroupModel)
+            {
+                if (a.Id == worker.GroupId)
+                {
+                    srep.GroupNumber = a.GroupNumber;
+
+                    break;
+                }
+            }
+            foreach (var b in db.CoachModel)
+            {
+                if (b.Id == worker.CoachId)
+                {
+                    srep.Fname = b.Fname;
+                    srep.Sname = b.Sname;
+                    srep.Tname = b.Tname;
+                    db.SubjectRepModel.Add(srep);
+
+                    break;
+                }
+            }
+            db.SaveChanges();
+            return View("Ready");
+        }
+
+        [HttpPost]
         public ActionResult DeleteSubjectPost(SubjectModel coach)
         {
             var worker = new SubjectModel();
@@ -237,6 +328,11 @@ namespace PhotoApp.Controllers
                 if (a.Id == coach.Id)
                 {
                     db.SubjectModel.Remove(a);
+                    foreach (var b in db.SubjectRepModel)
+                    { 
+                        if(a.SubjectTime == b.SubjectTime) //костыль
+                        db.SubjectRepModel.Remove(b); 
+                    }
                     break;
                 }
             }
@@ -326,6 +422,202 @@ namespace PhotoApp.Controllers
             return View("Ready");
         }
 
+        [HttpPost]
+        public ActionResult EditStudentPost(StudentModel coach)
+        {
+            var worker = new StudentModel();
+            foreach (var a in db.StudentModel)
+            {
+                if (a.Id == coach.Id)
+                {
+                    worker.Id = a.Id;
+                    if (coach.Fname != null)
+                    {
+                        worker.Fname = coach.Fname;
+                    }
+                    else
+                        worker.Fname = a.Fname;
+                    if (coach.Sname != null)
+                    {
+                        worker.Sname = coach.Sname;
+                    }
+                    else
+                        worker.Sname = a.Sname;
+                    if (coach.Tname != null)
+                    {
+                        worker.Tname = coach.Tname;
+                    }
+                    else
+                        worker.Tname = a.Tname;
+                    if (coach.Phone != null)
+                    {
+                        worker.Phone = coach.Phone;
+                    }
+                    else
+                        worker.Phone = a.Phone;
+                    if (coach.Email != null)
+                    {
+                        worker.Email = coach.Email;
+                    }
+                    else
+                        worker.Email = a.Email;
+                    db.StudentModel.Remove(a);
+                    break;
+                }
+            }
+
+            db.StudentModel.Add(worker);
+            db.SaveChanges();
+            return View("Ready");
+        }
+
+
+        [HttpPost]
+        public ActionResult EditGroup (GroupModel coach)
+        {
+            var worker = new GroupModel();
+            var ab = coach.CreateDate.ToString();
+            foreach (var a in db.GroupModel)
+            {
+                if (a.Id == coach.Id)
+                {
+                    worker.Id = a.Id;
+                    if (coach.GroupNumber != null)
+                    {
+                        worker.GroupNumber = coach.GroupNumber;
+                    }
+                    else
+                        worker.GroupNumber = a.GroupNumber;
+                    if (coach.CreateDate.ToString() != "1/1/0001 12:00:00 AM")
+                    {
+                        worker.CreateDate = coach.CreateDate;
+                    }
+                    else
+                        worker.CreateDate = a.CreateDate;
+                    if (coach.Satus != null)
+                    {
+                        worker.Satus = coach.Satus;
+                    }
+                    else
+                        worker.Satus = a.Satus;
+                    db.GroupModel.Remove(a);
+                    break;
+                }
+            }
+
+            db.GroupModel.Add(worker);
+            db.SaveChanges();
+            return View("Ready");
+        }
+
+        [HttpPost]
+        public ActionResult EditContract(ContractModel coach)
+        {
+            var worker = new ContractModel();
+            foreach (var a in db.ContractModel)
+            {
+                if (a.Id == coach.Id)
+                {
+                    worker.Id = a.Id;
+                    if (coach.ContractNumber != null)
+                    {
+                        worker.ContractNumber = coach.ContractNumber;
+                    }
+                    else
+                        worker.ContractNumber = a.ContractNumber;
+                    if (coach.ContractTime.ToString() != "1/1/0001 12:00:00 AM")
+                    {
+                        worker.ContractTime = coach.ContractTime;
+                    }
+                    else
+                        worker.ContractTime = a.ContractTime;
+                    if (coach.SeasonId != 0)
+                    {
+                        worker.SeasonId = coach.SeasonId;
+                    }
+                    else
+                        worker.SeasonId = a.SeasonId;
+                    if (coach.Status != null)
+                    {
+                        worker.Status = coach.Status;
+                    }
+                    else
+                        worker.Status = a.Status;
+                    if (coach.StudentId != 0)
+                    {
+                        worker.StudentId = coach.StudentId;
+                    }
+                    else
+                        worker.StudentId = a.StudentId;
+                    db.ContractModel.Remove(a);
+                    break;
+                }
+            }
+
+            var conrep = new ContractRepModel();
+            conrep.ContractNumber = coach.ContractNumber;
+            conrep.ContractTime = coach.ContractTime;
+            conrep.Status = coach.Status;
+            foreach (var a in db.StudentModel)
+            {
+                if (a.Id == coach.StudentId)
+                {
+                    conrep.Fname = a.Fname;
+                    conrep.Sname = a.Sname;
+                    conrep.Tname = a.Tname;
+                    break;
+                }
+            }
+            foreach (var b in db.SeasonModel)
+            {
+                if (b.Id == coach.SeasonId)
+                {
+                    conrep.Cost = b.Cost;
+                    conrep.SubjectCount = b.SubjectCount;
+                    break;
+                }
+            }
+            db.ContractRepModel.Add(conrep);
+            db.SaveChanges();
+            return View("Ready");
+        }
+
+        [HttpPost]
+        public ActionResult EditSeason(SeasonModel coach)
+        {
+            var worker = new SeasonModel();
+            foreach (var a in db.SeasonModel)
+            {
+                if (a.Id == coach.Id)
+                {
+                    worker.Id = a.Id;
+                    if (coach.Name != null)
+                    {
+                        worker.Name = coach.Name;
+                    }
+                    else
+                        worker.Name = a.Name;
+                    if (coach.Cost != 0)
+                    {
+                        worker.Cost = coach.Cost;
+                    }
+                    else
+                        worker.Cost = a.Cost;
+                    if (coach.SubjectCount != 0)
+                    {
+                        worker.SubjectCount = coach.SubjectCount;
+                    }
+                    else
+                        worker.SubjectCount = a.SubjectCount;
+                    db.SeasonModel.Remove(a);
+                    break;
+                }
+            }
+
+            db.SeasonModel.Add(worker);
+            db.SaveChanges();
+            return View("Ready");
+        }
 
         public ActionResult GroupRep(string ReportType)
         {
@@ -339,8 +631,13 @@ namespace PhotoApp.Controllers
             reportdata1.Name = "SubjectRep";
             reportdata1.Value = db.SubjectRepModel.ToList();
 
+            ReportDataSource reportdata2 = new ReportDataSource();
+            reportdata2.Name = "ContractRep";
+            reportdata2.Value = db.ContractRepModel.ToList();
+
             rep1.DataSources.Add(reportdata);
             rep1.DataSources.Add(reportdata1);
+            rep1.DataSources.Add(reportdata2);
             string rtype = ReportType;
             string gettype;
             string encording;
@@ -353,97 +650,6 @@ namespace PhotoApp.Controllers
             return File(renderByte, filenameExtention);
         }
 
-
         
-        //[HttpPost]
-        //public ActionResult ShowStudentsGroupPost(GroupStudentModel coach)
-        //{
-        //    var worker = new GroupStudentModel();
-        //    foreach (var a in db.GroupStudentModel)
-        //    {
-        //        if (a.GroupId == coach.GroupId)
-        //        {
-        //            db.SubjectModel.Remove(a);
-        //            break;
-        //        }
-        //    }
-
-        //    db.SaveChanges();
-        //    return View("Ready");
-        //}
-
-        //public async Task<IReadOnlyCollection<GroupStudentModel>> GetAsync()
-        //{
-        //     SqlConnection conn = new SqlConnection("Data Source=GOLOVKO-AM;Initial Catalog=PhotoApp;Integrated Security=True;" );
-        //    await conn.OpenAsync();
-        //    string commandText =
-        //            @"
-        //            SELECT  
-        //             gr.GroupNumber as [Номер группы],
-        //             st.Fname as [Фамилия],
-        //             st.Sname as [Имя],
-        //             st.Tname as [Отчество]
-        //              FROM [PhotoApp].[dbo].[GroupStudentModels] gs
-        //              join [PhotoApp].[dbo].[GroupModels] gr on gs.GroupId = gr.Id
-        //              join [PhotoApp].[dbo].[StudentModels] st on gs.StudentId = st.Id
-        //            ";
-        //     SqlCommand command = new SqlCommand()
-        //    {
-        //        CommandText = commandText,
-        //        Connection = conn
-        //    };
-
-        //     SqlDataReader reader = await command.ExecuteReaderAsync();
-        //    INavigationItem[] items = reader
-        //        .Cast<IDataRecord>()
-        //        .Select(x =>
-        //        {
-        //            NavigationItemType itemType = (NavigationItemType)Convert.ToInt32(x["ItemTypeId"]);
-
-        //            Guid id = Guid.Parse(Convert.ToString(x["Id"]));
-        //            Guid? parentId = x["ParentId"] as Guid?;
-        //            int ord = Convert.ToInt32(x["Ord"]);
-        //            bool visible = Convert.ToBoolean(x["Visible"]);
-        //            string shareId = x["ShareId"] as string;
-
-        //            Dictionary<int, string> names = ConvertXml(x["Names"]);
-
-        //            Dictionary<int, string> descriptions = ConvertXml(x["Descriptions"]);
-
-        //            Dictionary<int, string> hints = ConvertXml(x["Hints"]);
-
-        //            Dictionary<int, string> images = ConvertXml(x["Images"]);
-
-        //            Dictionary<int, string> embedPaths = ConvertXml(x["EmbedPaths"]);
-
-        //            NavigationItemProtection protection = new NavigationItemProtection(x["Password"] as string);
-
-        //            string slideId = x["SlideId"] as string;
-        //            int? portalId = x["PortalId"] as int?;
-
-        //            NavigationPortalType? portalType = x["PortalTypeId"] != DBNull.Value ?
-        //                (NavigationPortalType)Convert.ToInt32(x["PortalTypeId"])
-        //                : null;
-
-        //            INavigationItem item = itemType switch
-        //            {
-        //                NavigationItemType.Groups => new NavigationItemsGroup(id, parentId, ord, visible, names, hints, itemType, protection),
-        //                NavigationItemType.SubGroup => new NavigationItemsGroup(id, parentId, ord, visible, names, hints, itemType, protection),
-        //                NavigationItemType.List => new NavigationItemsGroup(id, parentId, ord, visible, names, hints, itemType, protection),
-        //                NavigationItemType.EndPortal => portalType switch
-        //                {
-        //                    NavigationPortalType.Dashboard => new NavigationDashboard(id, parentId, ord, visible, shareId, names, descriptions, hints, images, protection, portalId, slideId),
-        //                    NavigationPortalType.Embed => new NavigationEmbed(id, parentId, ord, visible, shareId, names, descriptions, hints, images, protection, embedPaths),
-        //                    _ => throw new ArgumentException($"Unhandled value {portalType} of enum {nameof(NavigationPortalType)}")
-        //                },
-        //                _ => throw new ArgumentException($"Unhandled value {itemType} of enum {nameof(NavigationItemType)}")
-        //            };
-
-        //            return item;
-        //        })
-        //        .ToArray();
-
-        //    return items;
-        //}
     }
 }

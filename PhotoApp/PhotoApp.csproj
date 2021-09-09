@@ -161,20 +161,10 @@
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\SubjectRepModel.cs" />
-    <Compile Include="PhotoAppDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PhotoAppDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="PhotoApplication.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PhotoApplication.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="PhotoApplication1DataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PhotoApplication1DataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="PhotoApplicationDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -198,20 +188,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="PhotoAppDataSet.xsc">
-      <DependentUpon>PhotoAppDataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="PhotoAppDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PhotoAppDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="PhotoAppDataSet.xss">
-      <DependentUpon>PhotoAppDataSet.xsd</DependentUpon>
-    </Content>
-    <Content Include="PhotoApplication1DataSet.xsc">
-      <DependentUpon>PhotoApplication1DataSet.xsd</DependentUpon>
-    </Content>
     <Content Include="PhotoApplication.xsc">
       <DependentUpon>PhotoApplication.xsd</DependentUpon>
     </Content>
@@ -222,14 +198,6 @@
     </None>
     <Content Include="PhotoApplication.xss">
       <DependentUpon>PhotoApplication.xsd</DependentUpon>
-    </Content>
-    <None Include="PhotoApplication1DataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PhotoApplication1DataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="PhotoApplication1DataSet.xss">
-      <DependentUpon>PhotoApplication1DataSet.xsd</DependentUpon>
     </Content>
     <Content Include="PhotoApplicationDataSet.xsc">
       <DependentUpon>PhotoApplicationDataSet.xsd</DependentUpon>

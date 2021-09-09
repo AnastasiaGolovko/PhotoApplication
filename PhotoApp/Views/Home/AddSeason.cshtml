@@ -132,7 +132,7 @@
             background-color: #00BFFF;
         }
 
-        #EditEmployees {
+        #EditGroup {
             background-color: #00BFFF;
         }
     </style>
@@ -147,11 +147,42 @@
         <a href="https://localhost:44318/Home/AddContract">Договоры</a>
         <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
         <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
-        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподаватели</a>
+        <a href="https://localhost:44318/Home/Load">Выгрузки</a>
     </div>
     <button class="tablink" onclick="openPage('Employees', this, '#00BFFF')">Список абонементов</button>
     <button class="tablink" onclick="openPage('AddEmployees', this, '#00BFFF')" id="defaultOpen">Добавление абонемента</button>
-    
+    <button class="tablink" onclick="openPage('EditGroup', this, '#00BFFF')" id="defaultOpen">Изменение абонемента</button>
+
+    <div id="EditGroup" class="tabcontent">
+        <div>
+            <form class="users" action="/Home/EditSeason" method="post">
+                <div class="container">
+                    <p>
+                        <label for="country">Выберите абонемент для изменения данных</label>
+                        <select id="Id" name="Id">
+                            @foreach (var b in ViewBag.SeasonModel)
+                            {
+                                <option value="@b.Id" name="Id">@b.Name</option>
+
+                            }
+
+                        </select>
+                    </p>
+                    <label for="lname">Название</label>
+                    <input type="text" id="Name" name="Name" >
+                    <label for="lname">Стоимость</label>
+                    <input type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');" id="Cost" name="Cost" >
+                    <label for="lname">Количество занятий</label>
+                    <input type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');" id="SubjectCount" name="SubjectCount" >
+
+                    <input type="submit" value="Сохранить изменения">
+
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="AddEmployees" class="tabcontent">
         <div>
             <form class="users" action="/Home/AddSeasonPost" method="post">
@@ -160,9 +191,9 @@
                     <label for="lname">Название</label>
                     <input type="text" id="Name" name="Name" required>
                     <label for="lname">Стоимость</label>
-                    <input type="text" id="Cost" name="Cost" required>
+                    <input type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');" id="Cost" name="Cost" required>
                     <label for="lname">Количество занятий</label>
-                    <input type="text" id="SubjectCount" name="SubjectCount" required>
+                    <input type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');" id="SubjectCount" name="SubjectCount" required>
 
                     <input type="submit" value="Добавить">
 

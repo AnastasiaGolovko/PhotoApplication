@@ -132,7 +132,10 @@
             background-color: #00BFFF;
         }
 
-        #EditEmployees {
+        #AddStudents {
+            background-color: #00BFFF;
+        }
+        #EditGroup {
             background-color: #00BFFF;
         }
     </style>
@@ -147,13 +150,46 @@
         <a href="https://localhost:44318/Home/AddContract">Договоры</a>
         <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
         <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
-        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподаватели</a>
+        <a href="https://localhost:44318/Home/Load">Выгрузки</a>
     </div>
 
     <button class="tablink" onclick="openPage('Employees', this, '#00BFFF')">Список групп</button>
     <button class="tablink" onclick="openPage('AddEmployees', this, '#00BFFF')" id="defaultOpen">Добавление группы</button>
     <button class="tablink" onclick="openPage('AddStudents', this, '#00BFFF')" id="defaultOpen">Добавление учеников в группу</button>
-    <button class="tablink" onclick="openPage('GroupStudents', this, '#00BFFF')" id="defaultOpen">Список учеников в группе</button>
+    <button class="tablink" onclick="openPage('EditGroup', this, '#00BFFF')" id="defaultOpen">Изменение группы</button>
+
+    <div id="EditGroup" class="tabcontent">
+        <div>
+            <form class="users" action="/Home/EditGroup" method="post">
+                <div class="container">
+                    <p>
+                        <label for="country">Выберите номер группы для изменения данных</label>
+                        <select id="Id" name="Id">
+                            @foreach (var b in ViewBag.GroupModel)
+                            {
+                                <option value="@b.Id" name="Id">@b.GroupNumber</option>
+
+                            }
+
+                        </select>
+                    </p>
+                    <label for="lname">Номер группы</label>
+                    <input type="text" id="GroupNumber" name="GroupNumber" >
+                    <label for="lname">Дата создания</label>
+                    <p></p>
+                    <input type="date" id="CreateDate" name="CreateDate" >
+                    <p></p>
+                    <label for="lname">Статус</label>
+                    <input type="text" id="Satus" name="Satus">
+
+                    <input type="submit" value="Сохранить изменения">
+
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <div id="AddEmployees" class="tabcontent">
         <div>
@@ -163,7 +199,9 @@
                     <label for="lname">Номер группы</label>
                     <input type="text" id="GroupNumber" name="GroupNumber" required>
                     <label for="lname">Дата создания</label>
+                    <p></p>
                     <input type="date" id="CreateDate" name="CreateDate" required>
+                    <p></p>
                     <label for="lname">Статус</label>
                     <input type="text" id="Satus" name="Satus">
 
@@ -236,12 +274,12 @@
             </form>
         </div>
     </div>
-   
+
     <div id="GroupStudents" class="tabcontent">
         <div>
             <form class="users" action="/Home/ShowStudentsGroupPost" method="post">
                 <div class="container">
-                                        
+
                     <p>
                         <label for="country">Выберите группу</label>
                         <select id="GroupId" name="GroupId">

@@ -132,7 +132,7 @@
             background-color: #00BFFF;
         }
 
-        #EditEmployees {
+        #ChangeEmployees {
             background-color: #00BFFF;
         }
     </style>
@@ -147,12 +147,48 @@
         <a href="https://localhost:44318/Home/AddContract">Договоры</a>
         <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
         <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
-        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподаватели</a>
+        <a href="https://localhost:44318/Home/Load">Выгрузки</a>
     </div>
 
     <button class="tablink" onclick="openPage('Employees', this, '#00BFFF')">Список учеников</button>
     <button class="tablink" onclick="openPage('AddEmployees', this, '#00BFFF')" id="defaultOpen">Добавление учеников</button>
-    
+    <button class="tablink" onclick="openPage('ChangeEmployees', this, '#00BFFF')" id="defaultOpen">Изменение учеников</button>
+
+    <div id="ChangeEmployees" class="tabcontent">
+        <div>
+            <form class="users" action="/Home/EditStudentPost" method="post">
+                <div class="container">
+                    <p>
+                        <label for="country">Выберите ученика для изменения данных</label>
+                        <select id="Id" name="Id">
+                            @foreach (var b in ViewBag.StudentModel)
+                            {
+                                <option value="@b.Id" name="Id">@b.Fname @b.Sname @b.Tname</option>
+
+                            }
+
+                        </select>
+                    </p>
+
+                    <label for="lname">Фамилия</label>
+                    <input type="text" id="FName" name="FName">
+                    <label for="lname">Имя</label>
+                    <input type="text" id="SName" name="SName">
+                    <label for="lname">Отчество</label>
+                    <input type="text" id="TName" name="TName">
+                    <label for="lname">Телефон</label>
+                    <input type="text" id="Phone" name="Phone">
+                    <label for="lname">Email</label>
+                    <input type="text" id="Email" name="Email">
+
+                    <input type="submit" value="Сохранить изменения">
+
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="AddEmployees" class="tabcontent">
         <div>
             <form class="users" action="/Home/AddStudentPost" method="post">
@@ -163,11 +199,11 @@
                     <label for="lname">Имя</label>
                     <input type="text" id="SName" name="SName" required>
                     <label for="lname">Отчество</label>
-                    <input type="text" id="TName" name="TName" >
+                    <input type="text" id="TName" name="TName">
                     <label for="lname">Телефон</label>
                     <input type="text" id="Phone" name="Phone" required>
                     <label for="lname">Email</label>
-                    <input type="text" id="Email" name="Email" >
+                    <input type="text" id="Email" name="Email">
 
                     <input type="submit" value="Добавить">
 
@@ -205,38 +241,38 @@
         </div>
     </div>
     @*<div id="EditEmployees" class="tabcontent">
-        <form class="users" action="/Home/EditUser" method="post">
-            <div class="container">
-                <p>
-                    <label for="country">Выберите сотрудника для редактирования</label>
-                    <select id="Id" name="Id">
-                        @foreach (var b in ViewBag.EmployeeModel)
-                        {
-                            <option value="@b.Id" name="Id">@b.Name</option>
+            <form class="users" action="/Home/EditUser" method="post">
+                <div class="container">
+                    <p>
+                        <label for="country">Выберите сотрудника для редактирования</label>
+                        <select id="Id" name="Id">
+                            @foreach (var b in ViewBag.EmployeeModel)
+                            {
+                                <option value="@b.Id" name="Id">@b.Name</option>
 
-                        }
+                            }
 
-                    </select>
-                </p>
-                <p>
-                    Введите новые данные для сотрудника
-                </p>
-                <label for="lname">Полное имя</label>
-                <input type="text" id="Name" name="Name">
-                <label for="lname">Логин</label>
-                <input type="text" id="Login" name="Login">
-                <label for="lname">Пароль</label>
-                <input type="text" id="Password" name="Password">
-                <label for="lname">Телефон</label>
-                <input type="text" id="PhoneNumber" name="PhoneNumber">
+                        </select>
+                    </p>
+                    <p>
+                        Введите новые данные для сотрудника
+                    </p>
+                    <label for="lname">Полное имя</label>
+                    <input type="text" id="Name" name="Name">
+                    <label for="lname">Логин</label>
+                    <input type="text" id="Login" name="Login">
+                    <label for="lname">Пароль</label>
+                    <input type="text" id="Password" name="Password">
+                    <label for="lname">Телефон</label>
+                    <input type="text" id="PhoneNumber" name="PhoneNumber">
 
 
-                <input type="submit" value="Сохранить изменения">
+                    <input type="submit" value="Сохранить изменения">
 
-            </div>
-        </form>
-    </div>
-    </div>*@
+                </div>
+            </form>
+        </div>
+        </div>*@
 
     <script>
         function openPage(pageName, elmnt, color) {

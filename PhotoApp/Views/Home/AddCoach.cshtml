@@ -132,7 +132,7 @@
             background-color: #00BFFF;
         }
 
-        #EditEmployees {
+        #ChangeEmployees {
             background-color: #00BFFF;
         }
     </style>
@@ -147,7 +147,8 @@
         <a href="https://localhost:44318/Home/AddContract">Договоры</a>
         <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
         <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
-        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподаватели</a>
+        <a href="https://localhost:44318/Home/Load">Выгрузки</a>
     </div>
     <button class="tablink" onclick="openPage('Employees', this, '#00BFFF')">Список сотрудников</button>
     <button class="tablink" onclick="openPage('AddEmployees', this, '#00BFFF')" id="defaultOpen">Добавление сотрудников</button>
@@ -180,7 +181,7 @@
                     <label for="lname">Email</label>
                     <input type="text" id="Email" name="Email">
 
-                    <input type="submit" value="Добавить">
+                    <input type="submit" value="Сохранить изменения">
 
                 </div>
             </form>

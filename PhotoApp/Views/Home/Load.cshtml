@@ -149,21 +149,14 @@
         <a href="https://localhost:44318/Home/AddContract">Договоры</a>
         <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
         <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
-        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподаватели</a>
         <a href="https://localhost:44318/Home/Load">Выгрузки</a>
-    </div>
-
-    
+    </div>    
    
 
-    <div class=" bttn btn-success">
-            @Html.ActionLink("Выгрузка занятий", "SubjectRep", new { ReportType = "excel" })
-        </div>
+    
         <div class=" bttn btn-success">
-            @Html.ActionLink("Выгрузка договоров", "ContractRep", new { ReportType = "excel" })
-        </div>
-        <div class=" bttn btn-success">
-            @Html.ActionLink("Выгрузка списка учеников в группе", "GroupRep", new { ReportType = "excel" })
+            @Html.ActionLink("Выгрузка в excel", "GroupRep", new { ReportType = "excel" })
         </div>
     <script>
         function openPage(pageName, elmnt, color) {

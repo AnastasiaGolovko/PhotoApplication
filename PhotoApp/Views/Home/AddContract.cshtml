@@ -124,11 +124,11 @@
             height: 100%;
         }
 
-        #Employees {
+        #EditGroup {
             background-color: #00BFFF;
         }
 
-        #AddEmployees {
+        #Group {
             background-color: #00BFFF;
         }
 
@@ -147,10 +147,71 @@
         <a href="https://localhost:44318/Home/AddContract">Договоры</a>
         <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
         <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
-        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподаватели</a>
+        <a href="https://localhost:44318/Home/Load">Выгрузки</a>
     </div>
 
-    
+    <button class="tablink" onclick="openPage('EditGroup', this, '#00BFFF')" id="defaultOpen">Изменение договора</button>
+    <button class="tablink" onclick="openPage('Group', this, '#00BFFF')" id="defaultOpen">Добавление договора</button>
+
+    <div id="EditGroup" class="tabcontent">
+        <div>
+            <form class="users" action="/Home/EditContract" method="post">
+                <div class="container">
+                    <p>
+                        <label for="country">Выберите номер договора для изменения данных</label>
+                        <select id="Id" name="Id">
+                            @foreach (var b in ViewBag.ContractModel)
+                            {
+                                <option value="@b.Id" name="Id">@b.ContractNumber</option>
+
+                            }
+
+                        </select>
+                    </p>
+                    <label for="lname">Номер договора</label>
+                    <input type="text" id="ContractNumber" name="ContractNumber" >
+
+                    <p>
+                        <label for="country">Выберите студента</label>
+                        <select id="StudentId" name="StudentId">
+                            @foreach (var b in ViewBag.StudentModel)
+                            {
+                                <option value="@b.Id" name="StudentId">@b.Fname @b.Sname @b.Tname</option>
+
+                            }
+
+                        </select>
+
+                    </p>
+
+                    <p>
+                        <label for="country">Выберите абонемент</label>
+                        <select id="SeasonId" name="SeasonId">
+                            @foreach (var b in ViewBag.SeasonModel)
+                            {
+                                <option value="@b.Id" name="SeasonId">@b.Name</option>
+
+                            }
+
+                        </select>
+
+                    </p>
+                    <label for="lname">Дата заключения договора</label>
+                    <p></p>
+                    <input type="date" id="ContractTime" name="ContractTime" >
+                    <p></p>
+                    <label for="lname">Статус</label>
+                    <input type="text" id="Status" name="Status">
+
+                    <input type="submit" value="Сохранить изменения">
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="Group" class="tabcontent">
         <div>
             <form class="users" action="/Home/AddContractPost" method="post">
                 <div class="container">
@@ -184,108 +245,40 @@
 
                     </p>
 
-                    @*<label for="lname">Id студента</label>
-        <input type="text" id="SName" name="SName" required>*@
-                    @*<label for="lname">Id абонемента</label>
-                    <input type="text" id="TName" name="TName">*@
+                   
                     <label for="lname">Дата заключения договора</label>
+                    <p></p>
                     <input type="date" id="ContractTime" name="ContractTime" required>
+                    <p></p>
                     <label for="lname">Статус</label>
-                    <input type="text" id="Status" name="Status">
+                    <input type="text" id="Status" name="Status" required>
 
                     <input type="submit" value="Добавить">
 
                 </div>
             </form>
         </div>
-    
-    @*<div id="Employees" class="tabcontent">
-        <div style="overflow-x:auto;">
-            <table>
+    </div>
 
+ 
 
-                <tr>
-                    <th> Номер договора</th>
-                    <th> Дата Договора</th>
-                    <th> Статус</th>
-                    <th> Студент</th>
-                    <th> Абонемент</th>
-
-                </tr>
-
-                @foreach (var b in ViewBag.ContractModel)
-                {
-                    <tr>
-                        <td><p>@b.ContractNumber</p></td>
-                        <td><p>@b.ContractTime</p></td>
-                        <td><p>@b.Status</p></td>
-
-                    </tr>
+        <script>
+            function openPage(pageName, elmnt, color) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
                 }
-                @foreach (var b in ViewBag.ЫегвутеModel)
-                {
-                    <tr>
-                        <td><p>@b.ContractNumber</p></td>
-                        <td><p>@b.ContractTime</p></td>
-                        <td><p>@b.Status</p></td>
-
-                    </tr>
+                tablinks = document.getElementsByClassName("tablink");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].style.backgroundColor = "";
                 }
+                document.getElementById(pageName).style.display = "block";
+                elmnt.style.backgroundColor = color;
 
-            </table>
-        </div>
-    </div>*@
-    @*<div id="EditEmployees" class="tabcontent">
-            <form class="users" action="/Home/EditUser" method="post">
-                <div class="container">
-                    <p>
-                        <label for="country">Выберите сотрудника для редактирования</label>
-                        <select id="Id" name="Id">
-                            @foreach (var b in ViewBag.EmployeeModel)
-                            {
-                                <option value="@b.Id" name="Id">@b.Name</option>
-
-                            }
-
-                        </select>
-                    </p>
-                    <p>
-                        Введите новые данные для сотрудника
-                    </p>
-                    <label for="lname">Полное имя</label>
-                    <input type="text" id="Name" name="Name">
-                    <label for="lname">Логин</label>
-                    <input type="text" id="Login" name="Login">
-                    <label for="lname">Пароль</label>
-                    <input type="text" id="Password" name="Password">
-                    <label for="lname">Телефон</label>
-                    <input type="text" id="PhoneNumber" name="PhoneNumber">
-
-
-                    <input type="submit" value="Сохранить изменения">
-
-                </div>
-            </form>
-        </div>
-        </div>*@
-
-    <script>
-        function openPage(pageName, elmnt, color) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
             }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].style.backgroundColor = "";
-            }
-            document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
-
-        }
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
-    </script>
+            // Get the element with id="defaultOpen" and click on it
+            document.getElementById("defaultOpen").click();
+        </script>
 </body>
 </html>

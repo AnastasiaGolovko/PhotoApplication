@@ -147,18 +147,80 @@
         <a href="https://localhost:44318/Home/AddContract">Договоры</a>
         <a href="https://localhost:44318/Home/AddSeason">Абонементы</a>
         <a href="https://localhost:44318/Home/AddStudent">Ученики</a>
-        <a href="https://localhost:44318/Home/AddCoach">Преподователи</a>
+        <a href="https://localhost:44318/Home/AddCoach">Преподаватели</a>
+        <a href="https://localhost:44318/Home/Load">Выгрузки</a>
     </div>
 
     <button class="tablink" onclick="openPage('Employees', this, '#00BFFF')">Добавление занятия</button>
     <button class="tablink" onclick="openPage('AddEmployees', this, '#00BFFF')" id="defaultOpen">Удаление занятия</button>
+    <button class="tablink" onclick="openPage('EditEmployees', this, '#00BFFF')" id="defaultOpen">Редактирование занятия</button>
+
+    <div id="EditEmployees" class="tabcontent">
+        <form class="users" action="/Home/EditSubject" method="post">
+            <div class="container">
+                <p>
+                    <label for="country">Выберите занятие для редактирования</label>
+                    <select id="Id" name="Id">
+                        @foreach (var b in ViewBag.SubjectModel)
+                        {
+                            <option value="@b.Id" name="Id">@b.SubjectTime @b.SubjectType @b.Topic @b.Place</option>
+
+                        }
+
+                    </select>
+
+                </p>
+                <label for="lname">Время занятия</label>
+                <p></p>
+                <input type="datetime-local" id="SubjectTime" name="SubjectTime" >
+                <p></p>
+                <label for="lname">Предмет</label>
+                <input type="text" id="SubjectType" name="SubjectType" >
+                <label for="lname">Топик</label>
+                <input type="text" id="Topic" name="Topic">
+                <p>
+                    <label for="country">Выберите преподавателя</label>
+                    <select id="CoachId" name="CoachId">
+                        @foreach (var b in ViewBag.CoachModel)
+                        {
+                            <option value="@b.Id" name="CoachId">@b.Fname @b.Sname @b.Tname</option>
+
+                        }
+
+                    </select>
+
+                </p>
+                <label for="lname">Место</label>
+                <input type="text" id="Place" name="Place" >
+                <p>
+                    <label for="country">Выберите группу</label>
+                    <select id="GroupId" name="GroupId">
+                        @foreach (var b in ViewBag.GroupModel)
+                        {
+                            <option value="@b.Id" name="GroupId">@b.GroupNumber</option>
+
+                        }
+
+                    </select>
+
+                </p>
+                <label for="lname">Статус</label>
+                <input type="text" id="Status" name="Status">
+
+                <input type="submit" value="Сохрианить изменения">
+
+            </div>
+        </form>
+    </div>
 
     <div id="Employees" class="tabcontent">
         <form class="users" action="/Home/AddSubjectPost" method="post">
             <div class="container">
 
                 <label for="lname">Время занятия</label>
+                <p></p>
                 <input type="datetime-local" id="SubjectTime" name="SubjectTime" required>
+                <p></p>
                 <label for="lname">Предмет</label>
                 <input type="text" id="SubjectType" name="SubjectType" required>
                 <label for="lname">Топик</label>
@@ -207,81 +269,21 @@
                     <select id="Id" name="Id">
                         @foreach (var b in ViewBag.SubjectModel)
                         {
-                        <option value="@b.Id" name="Id">@b.SubjectTime @b.SubjectType @b.Topic @b.Place</option>
+                            <option value="@b.Id" name="Id">@b.SubjectTime @b.SubjectType @b.Topic @b.Place</option>
 
                         }
 
                     </select>
 
                 </p>
-                
+
                 <input type="submit" value="Удалить">
 
             </div>
         </form>
     </div>
 
-    @*<div style="overflow-x:auto;">
-            <table>
 
-
-                <tr>
-                    <th> Фамилия</th>
-                    <th> Имя</th>
-                    <th> Отчество</th>
-                    <th> Телефон</th>
-                    <th> Email</th>
-
-                </tr>
-
-                @foreach (var b in ViewBag.StudentModel)
-                {
-                    <tr>
-                        <td><p>@b.Fname</p></td>
-                        <td><p>@b.Sname</p></td>
-                        <td><p>@b.Tname</p></td>
-                        <td><p>@b.Phone</p></td>
-                        <td><p>@b.Email</p></td>
-
-                    </tr>
-                }
-
-            </table>
-        </div>*@
-
-    @*<div id="EditEmployees" class="tabcontent">
-            <form class="users" action="/Home/EditUser" method="post">
-                <div class="container">
-                    <p>
-                        <label for="country">Выберите сотрудника для редактирования</label>
-                        <select id="Id" name="Id">
-                            @foreach (var b in ViewBag.EmployeeModel)
-                            {
-                                <option value="@b.Id" name="Id">@b.Name</option>
-
-                            }
-
-                        </select>
-                    </p>
-                    <p>
-                        Введите новые данные для сотрудника
-                    </p>
-                    <label for="lname">Полное имя</label>
-                    <input type="text" id="Name" name="Name">
-                    <label for="lname">Логин</label>
-                    <input type="text" id="Login" name="Login">
-                    <label for="lname">Пароль</label>
-                    <input type="text" id="Password" name="Password">
-                    <label for="lname">Телефон</label>
-                    <input type="text" id="PhoneNumber" name="PhoneNumber">
-
-
-                    <input type="submit" value="Сохранить изменения">
-
-                </div>
-            </form>
-        </div>
-        </div>*@
 
     <script>
         function openPage(pageName, elmnt, color) {
